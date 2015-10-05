@@ -5,8 +5,8 @@ function test {
     shift
     set +e
     "$@"
-    set -e
     local status=$?
+    set -e
     if [ $status -ne $code ]; then
         echo "failed: $@. Expected $code, got $status."
         return 1
