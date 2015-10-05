@@ -4,3 +4,4 @@ dependencies:
 test:
   override:
     - ./program tests/*.txt
+    - ./program tests/*.txt tests/non-existent.txt
