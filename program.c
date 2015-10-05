@@ -1,5 +1,6 @@
 #include <errno.h>
 #include <stdio.h>
+#include <stdint.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
@@ -7,6 +8,7 @@
 
 #define EVEN 0
 #define ODD 1
+#define ERROR -1
 
 //todo: better name for this function
 int fileHasEvenAmountOfCharacters (char* filename) {
@@ -15,10 +17,10 @@ int fileHasEvenAmountOfCharacters (char* filename) {
     struct stat sb;
     if (stat(filename, &sb) != 0) {
         //failed to read file
-        return -1;
+        return ERROR;
     } else if (!S_ISREG(sb.st_mode)) {
         //not a file (directory?)
-        return -1;
+        return ERROR;
     } else {
         //is a file
         //if even, modulus 2 will give 0
@@ -42,7 +44,7 @@ int main (int argc, char *argv[])
         int forkResult = fork();
         if (forkResult == -1) {
             //fork failed
-            return -1;
+            return ERROR;
         } else if (forkResult == 0) {
             //running in child process:
             //the return result is the exit code
@@ -61,17 +63,17 @@ int main (int argc, char *argv[])
         int status;
         if (wait(&status) == -1 || !WIFEXITED(status)) {
             //waiting failed
-            return -1;
+            return ERROR;
         }
 
-        int exitCode = WEXITSTATUS(status);
+        int8_t exitCode = (int8_t)WEXITSTATUS(status);
         printf("exit code: %d\n", exitCode);
 
         if (currentState == -1) {
             //for the first child returned,
             //simply set the state
             currentState = exitCode;
-        } else if (exitCode != -1) {
+        } else if (exitCode != ERROR) {
             //0 + 1 % 2 == ODD
             //1 + 1 % 2 == EVEN
             currentState = (currentState + exitCode) % 2;
