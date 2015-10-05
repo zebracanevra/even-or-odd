@@ -60,19 +60,21 @@ int main (int argc, char *argv[])
         //wait for any of the child process to exit,
         //copying it's exit code into status
         int status;
-        if (wait(&status) == -1) {
+        if (wait(&status) == -1 || !WIFEXITED(status)) {
             //waiting failed
             return -1;
         }
 
+        int exitCode = WEXITSTATUS(status);
+
         if (currentState == -1) {
             //for the first child returned,
             //simply set the state
-            currentState = status;
+            currentState = exitCode;
         } else {
             //0 + 1 % 2 == ODD
             //1 + 1 % 2 == EVEN
-            currentState = currentState + status % 2;
+            currentState = (currentState + exitCode) % 2;
         }
     }
 
@@ -84,6 +86,6 @@ int main (int argc, char *argv[])
 
     printf("processesForked: %d\n", processesForked);
     printf("currentState: %d\n", currentState);
-    
+
     return currentState;
 }
