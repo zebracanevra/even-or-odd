@@ -3,4 +3,4 @@ dependencies:
     - make
 test:
   override:
-    - ./program
+    - ./program tests/*.txt
