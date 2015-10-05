@@ -1,0 +1,25 @@
+#!/bin/bash
+
+function test {
+    local code=$1
+    shift
+    "$@"
+    local status=$?
+    if [ $status -ne $code ]; then
+        echo "failed: $@. Expected $code, got $status." >&2
+        return 1
+    fi
+    return 0
+}
+
+#even
+test 0 ./program tests/even*
+test 0 ./program tests/even1.txt
+#odd
+test 1 ./program tests/odd1.txt
+#odd + odd = even
+test 0 ./program tests/odd*
+#failures
+test 255 ./program tests/non-existent.txt
+#exclude failures
+test 0 ./program tests/* tests/non-existent.txt
