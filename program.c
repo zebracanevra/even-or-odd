@@ -1,3 +1,4 @@
+#include <errno.h>
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -10,6 +11,8 @@ int fileIsEven (char* filename) {
     struct stat sb;
     if(stat(filename, &sb) == 0) {
         //failed to read file
+        int err = errno;
+        printf("error reading %s: %d\n\n", filename, err);
         return -1;
     } else if(!S_ISREG(sb.st_mode)) {
         //not a file (directory?)
