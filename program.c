@@ -9,7 +9,7 @@
 #define ODD 1
 
 //todo: better name for this function
-int fileIsEven (char* filename) {
+int fileHasEvenAmountOfCharacters (char* filename) {
     //version 1: use 'stat' to find the length.
     //the length is the amount of characters
     struct stat sb;
@@ -40,14 +40,13 @@ int main (int argc, char *argv[])
     for (int i = 1; i < argc; i++) {
         char* filename = argv[i];
         int forkResult = fork();
-        printf("forked: %d\n", forkResult);
         if (forkResult == -1) {
             //fork failed
             return -1;
         } else if (forkResult == 0) {
             //running in child process:
             //the return result is the exit code
-            return fileIsEven(filename);
+            return fileHasEvenAmountOfCharacters(filename);
         } else {
             //running in parent process:
             processesForked++;
@@ -83,9 +82,6 @@ int main (int argc, char *argv[])
     } else if (currentState == ODD) {
         printf("Odd\n");
     }
-
-    printf("processesForked: %d\n", processesForked);
-    printf("currentState: %d\n", currentState);
 
     return currentState;
 }
