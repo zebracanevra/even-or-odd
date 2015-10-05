@@ -65,12 +65,13 @@ int main (int argc, char *argv[])
         }
 
         int exitCode = WEXITSTATUS(status);
+        printf("exit code: %d\n", exitCode);
 
         if (currentState == -1) {
             //for the first child returned,
             //simply set the state
             currentState = exitCode;
-        } else {
+        } else if (exitCode != -1) {
             //0 + 1 % 2 == ODD
             //1 + 1 % 2 == EVEN
             currentState = (currentState + exitCode) % 2;
