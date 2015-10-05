@@ -40,6 +40,7 @@ int main (int argc, char *argv[])
     for (int i = 1; i < argc; i++) {
         char* filename = argv[i];
         int forkResult = fork();
+        printf("forked: %d\n", forkResult);
         if (forkResult == -1) {
             //fork failed
             return -1;
@@ -81,5 +82,8 @@ int main (int argc, char *argv[])
         printf("Odd\n");
     }
 
+    printf("processesForked: %d\n", processesForked);
+    printf("currentState: %d\n", currentState);
+    
     return currentState;
 }
