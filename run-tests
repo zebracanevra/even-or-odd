@@ -6,10 +6,10 @@ function test {
     "$@"
     local status=$?
     if [ $status -ne $code ]; then
-        echo "failed: $@. Expected $code, got $status." >&2
+        echo "failed: $@. Expected $code, got $status."
         return 1
     fi
-    echo "success: $@ with code $1"
+    echo "success: $@ with code $code"
     return 0
 }
 
