@@ -8,7 +8,7 @@ int fileIsEven (char* filename) {
     //version 1: use 'stat' to find the length.
     //the length is the amount of characters
     struct stat sb;
-    if(stat(argv[i], &sb) == 0) {
+    if(stat(filename, &sb) == 0) {
         //failed to read file
         return -1;
     } else if(!S_ISREG(sb.st_mode)) {
