@@ -9,10 +9,8 @@ int fileIsEven (char* filename) {
     //version 1: use 'stat' to find the length.
     //the length is the amount of characters
     struct stat sb;
-    if(stat(filename, &sb) == 0) {
+    if(stat(filename, &sb) != 0) {
         //failed to read file
-        int err = errno;
-        printf("error reading %s: %d\n\n", filename, err);
         return -1;
     } else if(!S_ISREG(sb.st_mode)) {
         //not a file (directory?)
