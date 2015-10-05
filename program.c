@@ -67,7 +67,6 @@ int main (int argc, char *argv[])
         }
 
         int8_t exitCode = (int8_t)WEXITSTATUS(status);
-        printf("exit code: %d\n", exitCode);
 
         if (currentState == -1) {
             //for the first child returned,
