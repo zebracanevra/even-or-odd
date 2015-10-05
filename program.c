@@ -51,7 +51,6 @@ int main (int argc, char *argv[])
             //running in parent process:
             processesForked++;
         }
-        printf("Arg %d: %s Even? %d\n", i, filename, fileIsEven(filename));
     }
 
     int currentState = -1;
